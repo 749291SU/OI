@@ -2,12 +2,13 @@
 #include <cstring>
 #include <algorithm>
 #include <vector>
+#include <iomanip>
 
 using i64 = long long;
 
-const int Y = 7, CC = 1e7;
+const int Y = 8, CC = 1e8;
 
-inline void compas_bit(std::vector<i64>& a) {
+inline void compress_bit(std::vector<i64>& a) {
 	i64 x = 0;
 	int p1 = 0;
 	for (int i = 0; i < a.size(); i += Y) {
@@ -75,11 +76,6 @@ std::vector<i64> gcd(std::vector<i64> a, std::vector<i64> b) {
 	return a;
 }
 
-// inline void print_vec(std::vector<i64>& a) {
-// 	for (int i = 0; i < a.size(); i ++) std::cout << a[i] << " ";
-// 	std::cout << "\n";
-// }
-
 int main() {
 	std::ios::sync_with_stdio(false);
 	std::cin.tie(0); std::cout.tie(0);
@@ -90,17 +86,12 @@ int main() {
 	for (int i = a.size() - 1; i >= 0; i --) aa.push_back(a[i] - '0');
 	for (int i = b.size() - 1; i >= 0; i --) bb.push_back(b[i] - '0');
 
-	compas_bit(aa); compas_bit(bb);
+	compress_bit(aa); compress_bit(bb);
 
 	std::vector<i64> res = gcd(aa, bb);
-	for (int i = res.size() - 1; i >= 0; i --) {
-		i64 x = res[i];
-		std::vector<int> t;
-		do {
-			t.push_back(x % 10);
-			x /= 10;
-		} while (x);
-		for (int j = t.size() - 1; j >= 0; j --) std::cout << t[j];
+	std::cout << res[res.size() - 1];
+	for (int i = res.size() - 2; i >= 0; i --) {
+		std::cout << std::setw(8) << std::right << std::setfill('0') << res[i];
 	}
 	std::cout << "\n";
 	return 0;
